@@ -30,10 +30,12 @@ void drawSphere(Display *dpy, Window &win) {
   glRotatef(angle, 0.5f, 1.0f, 0.0f);
   // glScalef(pos, pos, 0.0f);
 
+    static int loopcount = 0;
   for (phi = -M_PI_2; phi < M_PI_2; phi += angled) {
     glBegin(GL_QUAD_STRIP);
-    for (theta = 0.0f; theta < (2.0f * M_PI + angled); theta += angled) {
-      glColor3f(sinf(phi*theta), cosf(phi * theta), cosf(theta));
+    for (theta = 0.0f; theta <= (2.0f * M_PI )+angled; theta += angled) {
+        if(loopcount++ % 2 == 0)
+            glColor3f(abs(sinf(phi)), abs(cosf(phi)), abs(cosf(phi)));
       glVertex3f(cosf(theta) * cosf(phi), sinf(phi), sinf(theta) * cosf(phi));
       glVertex3f(cosf(theta + angled) * cosf(phi + angled), sinf(phi + angled),
                  sinf(theta + angled) * cosf(phi + angled));
