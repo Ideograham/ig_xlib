@@ -1,3 +1,3 @@
 #!/bin/bash
-
-../build/xlib_init
+file="$1"
+../build/"$file"

@@ -1,3 +1,5 @@
 #!/bin/bash
 
-clang++ xlib_init.cpp -g -o ../build/xlib_init -lX11 -lGL -lGLU
+file="$1"
+
+clang++ "$file".cpp -g -o ../build/"$file" -lX11 -lGL -lGLU
