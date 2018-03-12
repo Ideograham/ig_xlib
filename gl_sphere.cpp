@@ -1,6 +1,6 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include <X11/Xlib.h>
 //#include <X11/Xutil.h>
@@ -16,7 +16,7 @@ void drawSphere(Display *dpy, Window &win) {
 
   static GLint angle;
   static GLfloat pos;
-  
+
   GLfloat theta, phi;
   const GLfloat angled = 0.005f;
 
@@ -28,24 +28,20 @@ void drawSphere(Display *dpy, Window &win) {
 
   glPushMatrix();
   glRotatef(angle, 0.5f, 1.0f, 0.0f);
-  //glScalef(pos, pos, 0.0f);
+  // glScalef(pos, pos, 0.0f);
 
-  for (phi = -M_PI_2; phi < M_PI_2; phi+=angled)
-  {
-      glBegin(GL_QUAD_STRIP);
-      for (theta = 0.0f; theta <= 2.0f*M_PI+angled; theta += angled)
-      {
-          glColor3f(phi, phi*theta, theta);
-          glVertex3f(cosf(theta)*cosf(phi), sinf(phi), sinf(theta)*cosf(phi));
-          glVertex3f(cosf(theta+angled)*cosf(phi+angled), 
-                    sinf(phi+angled), 
-                    sinf(theta+angled)*cosf(phi+angled));
-      }
-      glEnd();
+  for (phi = -M_PI_2; phi < M_PI_2; phi += angled) {
+    glBegin(GL_QUAD_STRIP);
+    for (theta = 0.0f; theta <= 2.0f * M_PI + angled; theta += angled) {
+      glColor3f(phi, phi * theta, theta);
+      glVertex3f(cosf(theta) * cosf(phi), sinf(phi), sinf(theta) * cosf(phi));
+      glVertex3f(cosf(theta + angled) * cosf(phi + angled), sinf(phi + angled),
+                 sinf(theta + angled) * cosf(phi + angled));
+    }
+    glEnd();
   }
 
-  
-    glPopMatrix();
+  glPopMatrix();
 
   glXSwapBuffers(dpy, win);
 
@@ -58,7 +54,6 @@ void drawSphere(Display *dpy, Window &win) {
     pos = 0.0f;
 }
 
-
 void drawTriangle(Display *dpy, Window &win) {
   XWindowAttributes winattr;
   XGetWindowAttributes(dpy, win, &winattr);
@@ -69,11 +64,11 @@ void drawTriangle(Display *dpy, Window &win) {
 
   glClearColor(0.7f, 0.7f, 0.7f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //glColor3f(0.0f, 0.0f, 0.0f);
+  // glColor3f(0.0f, 0.0f, 0.0f);
 
   glPushMatrix();
   glRotatef(angle, 0.5f, 1.0f, 0.0f);
-  //glScalef(pos, pos, 0.0f);
+  // glScalef(pos, pos, 0.0f);
 
   glBegin(GL_QUADS);
   glColor3f(0.0f, 0.9f, 1.0f);
@@ -157,7 +152,7 @@ int main(int argc, char **args) {
   while (1) {
 
     if (XPending(dpy) == 0) {
-      //drawTriangle(dpy, win);
+      // drawTriangle(dpy, win);
       drawSphere(dpy, win);
       usleep(5000);
       continue;
