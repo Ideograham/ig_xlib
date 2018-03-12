@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <X11/Xlib.h>
 //#include <X11/Xutil.h>
@@ -8,6 +9,55 @@
 
 #include <GL/glu.h>
 #include <GL/glx.h>
+
+void drawSphere(Display *dpy, Window &win) {
+  XWindowAttributes winattr;
+  XGetWindowAttributes(dpy, win, &winattr);
+
+  static GLint angle;
+  static GLfloat pos;
+  
+  GLfloat theta, phi;
+  const GLfloat angled = 0.005f;
+
+  glViewport(0, 0, winattr.width, winattr.height);
+
+  glClearColor(0.7f, 0.7f, 0.7f, 0.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glColor3f(0.0f, 0.0f, 0.0f);
+
+  glPushMatrix();
+  glRotatef(angle, 0.5f, 1.0f, 0.0f);
+  //glScalef(pos, pos, 0.0f);
+
+  for (phi = -M_PI_2; phi < M_PI_2; phi+=angled)
+  {
+      glBegin(GL_QUAD_STRIP);
+      for (theta = 0.0f; theta <= 2.0f*M_PI+angled; theta += angled)
+      {
+          glColor3f(phi, phi*theta, theta);
+          glVertex3f(cosf(theta)*cosf(phi), sinf(phi), sinf(theta)*cosf(phi));
+          glVertex3f(cosf(theta+angled)*cosf(phi+angled), 
+                    sinf(phi+angled), 
+                    sinf(theta+angled)*cosf(phi+angled));
+      }
+      glEnd();
+  }
+
+  
+    glPopMatrix();
+
+  glXSwapBuffers(dpy, win);
+
+  angle += 1;
+  if (angle >= 360)
+    angle = 0;
+
+  pos += 0.001f;
+  if (pos >= 1.0f)
+    pos = 0.0f;
+}
+
 
 void drawTriangle(Display *dpy, Window &win) {
   XWindowAttributes winattr;
@@ -107,7 +157,8 @@ int main(int argc, char **args) {
   while (1) {
 
     if (XPending(dpy) == 0) {
-      drawTriangle(dpy, win);
+      //drawTriangle(dpy, win);
+      drawSphere(dpy, win);
       usleep(5000);
       continue;
     }
