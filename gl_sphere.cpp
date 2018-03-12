@@ -18,7 +18,7 @@ void drawSphere(Display *dpy, Window &win) {
   static GLfloat pos;
 
   GLfloat theta, phi;
-  const GLfloat angled = 0.005f;
+  const GLfloat angled = 0.05f;
 
   glViewport(0, 0, winattr.width, winattr.height);
 
@@ -32,8 +32,8 @@ void drawSphere(Display *dpy, Window &win) {
 
   for (phi = -M_PI_2; phi < M_PI_2; phi += angled) {
     glBegin(GL_QUAD_STRIP);
-    for (theta = 0.0f; theta <= 2.0f * M_PI + angled; theta += angled) {
-      glColor3f(phi, phi * theta, theta);
+    for (theta = 0.0f; theta < (2.0f * M_PI + angled); theta += angled) {
+      glColor3f(sinf(phi*theta), cosf(phi * theta), cosf(theta));
       glVertex3f(cosf(theta) * cosf(phi), sinf(phi), sinf(theta) * cosf(phi));
       glVertex3f(cosf(theta + angled) * cosf(phi + angled), sinf(phi + angled),
                  sinf(theta + angled) * cosf(phi + angled));
@@ -46,7 +46,7 @@ void drawSphere(Display *dpy, Window &win) {
   glXSwapBuffers(dpy, win);
 
   angle += 1;
-  if (angle >= 360)
+  if (angle >= 359)
     angle = 0;
 
   pos += 0.001f;
