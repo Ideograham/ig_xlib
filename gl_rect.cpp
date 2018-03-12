@@ -19,19 +19,35 @@ void drawTriangle(Display *dpy, Window &win) {
 
   glClearColor(0.7f, 0.7f, 0.7f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glColor3f(0.0f, 0.0f, 0.0f);
+  //glColor3f(0.0f, 0.0f, 0.0f);
 
   glPushMatrix();
   glRotatef(angle, 0.5f, 1.0f, 0.0f);
-  glScalef(pos, pos, 0.0f);
+  //glScalef(pos, pos, 0.0f);
 
-  glBegin(GL_TRIANGLES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(-1.0f, 0.5f, 0.0f);
-  glVertex3f(0.5f, 0.5f, 0.0f);
+  glBegin(GL_QUADS);
+  glColor3f(0.0f, 0.9f, 1.0f);
+
+  glVertex3f(0.5f, 0.5f, 0.5f);
+  glVertex3f(-0.5f, 0.5f, 0.5f);
+  glVertex3f(-0.5f, -0.5f, 0.5f);
+  glVertex3f(0.5f, -0.5f, 0.5f);
+
+  glColor3f(0.0f, 0.0f, 1.0f);
+
+  glVertex3f(0.5f, 0.5f, -0.5f);
+  glVertex3f(-0.5f, 0.5f, -0.5f);
+  glVertex3f(-0.5f, -0.5f, -0.5f);
+  glVertex3f(0.5f, -0.5f, -0.5f);
+
+  glColor3f(0.0f, 1.0f, 0.0f);
+
+  glVertex3f(0.5f, 0.5f, 0.5f);
+  glVertex3f(-0.5f, 0.5f, 0.5f);
+  glVertex3f(-0.5f, 0.5f, -0.5f);
+  glVertex3f(0.5f, 0.5f, -0.5f);
 
   glEnd();
-
   glPopMatrix();
 
   glXSwapBuffers(dpy, win);
